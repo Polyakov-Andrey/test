@@ -1,8 +1,5 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.slobodastudio.tast01.test;
+
+package com.slobodastudio.test;
 
 import com.slobodastudio.solution.Task02S;
 import java.util.Arrays;
@@ -14,7 +11,8 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- *
+ * JUnit Parameterized Test task01
+ * 
  * @author Andrey Polyakov
  * @version 1.0
  */

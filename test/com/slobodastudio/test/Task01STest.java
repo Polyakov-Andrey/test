@@ -1,17 +1,11 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.slobodastudio.tast01.test;
+
+package com.slobodastudio.test;
 
 import com.slobodastudio.solution.Task01S;
 import java.math.BigInteger;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.junit.Test;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
@@ -23,13 +17,13 @@ import org.junit.runners.Parameterized.Parameters;
  * @version 1.0
  */
 @RunWith(value = Parameterized.class)
-public class Test01STest {
+public class Task01STest {
 
     private BigInteger a;
     private BigInteger b;
     private boolean rez;
 
-    public Test01STest(String a, String b, boolean rez) {
+    public Task01STest(String a, String b, boolean rez) {
         this.a = new BigInteger(a);
         this.b = new BigInteger(b);
         this.rez = rez;
