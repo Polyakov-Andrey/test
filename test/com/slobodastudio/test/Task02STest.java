@@ -11,7 +11,7 @@ import org.junit.runners.Parameterized;
 import org.junit.runners.Parameterized.Parameters;
 
 /**
- * JUnit Parameterized Test task02
+ * JUnit test with parameters. This test unit is designed for the task02
  * 
  * @author Andrey Polyakov
  * @version 1.0
