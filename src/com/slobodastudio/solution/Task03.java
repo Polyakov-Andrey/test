@@ -26,13 +26,13 @@ import java.util.logging.Logger;
  *
  * Input
  *
- * s [the number of tests <= 10]
- * n [the number of cities <= 10000]
+ * s [the number of tests &lt= 10]
+ * n [the number of cities &lt= 10000]
  * NAME [city name]
  * p [the number of neighbours of city NAME]
  * nr cost [nr - index of a city connected to NAME (the index of the first city is 1)]
  *         [cost - the transportation cost]
- * r [the number of paths to find <= 100]
+ * r [the number of paths to find &lt= 100]
  * NAME1 NAME2 [NAME1 - source, NAME2 - destination] [empty line separating the tests]
  *
  * Output
@@ -47,16 +47,15 @@ public class Task03 extends TaskAbstract implements ITask {
 
     class Data {
 
-        // the list cities
+//         the list cities
         private List<Node> cities = new ArrayList<Node>();
-        // the list of neighbours of cities
+//         the list of neighbours of cities
         private List<Edge> edges = new ArrayList<Edge>();
 //         the number of rute to find
         private HashMap<Integer, Edge> rutes = new HashMap<Integer, Edge>();
 //         the list of rute
         private ArrayList<List<Node>> listPath = new ArrayList<List<Node>>();
     }
-//      
     List<Data> graphs = new ArrayList<Data>();
 
     public Task03(String nameFileIn, String nameFileOut) {
@@ -69,7 +68,7 @@ public class Task03 extends TaskAbstract implements ITask {
             fileIn = new File(nameFileIn);
             if (fileIn.exists()) {
                 this.setFileNameIn(fileIn);
-            }else {
+            } else {
                 throw new FileNotFoundException("The file " + fileIn + " was not found.");
             }
 
@@ -79,7 +78,7 @@ public class Task03 extends TaskAbstract implements ITask {
                     throw new IOException("The file " + fileOut.getName() + " is not delate.");
                 }
             }
-            
+
             if (!fileOut.createNewFile()) {
                 throw new IOException("The file " + fileOut.getName() + " is not created.");
             }
@@ -299,11 +298,16 @@ public class Task03 extends TaskAbstract implements ITask {
         if (args.length == 2) {
             nameFileIn = args[0];
             nameFileOut = args[1];
+        } else {
+//            nameFileIn = "./data/task03.in";
+//            nameFileOut = "./data/task03.out";
+            
+            nameFileIn = "./data/task0301.in";
+            nameFileOut = "./data/task0301.out";            
         }
-
-        //Task03 task03 = new Task03("./data/task03.in", "./data/task03.out");
-        Task03 task03 = new Task03("./data/task0301.in", "./data/task0301.out");
         
+        Task03 task03 = new Task03(nameFileIn, nameFileOut);
+
         task03.loadFromFile();
         task03.solution();
         task03.writeToFile();
