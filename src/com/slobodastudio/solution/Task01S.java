@@ -27,7 +27,7 @@ public class Task01S {
         BigInteger a = null;
         BigInteger b = null;
 
-        Scanner s = new Scanner(new File("task01.in"));        
+        Scanner s = new Scanner(new File("./data/task01.in"));        
         if (s.hasNext()) {
             if (s.hasNextBigInteger()) {
                 a = s.nextBigInteger();
@@ -42,8 +42,8 @@ public class Task01S {
         boolean rez = Task01S.solution(a, b);
         System.out.printf("A = %d, B=%d ==> %s\n", a, b, rez);
         
-        PrintWriter out = new PrintWriter(new File("task01.out"));
-        out.println(rez);
+        PrintWriter out = new PrintWriter(new File("./data/task01.out"));
+        out.println((rez)?"ДА":"НЕТ");
         out.close();      
     }
 

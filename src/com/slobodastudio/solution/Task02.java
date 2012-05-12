@@ -1,4 +1,3 @@
-
 package com.slobodastudio.solution;
 
 import com.slobodastudio.tasks.ITask;
@@ -54,7 +53,6 @@ public class Task02 extends TaskAbstract implements ITask {
             if (fileIn.exists()) {
                 this.setFileNameIn(fileIn);
             } else {
-                //throw new NullPointerException("rrrr");
                 throw new FileNotFoundException("The file " + nameFileIn + " is not find.");
             }
 
@@ -62,13 +60,14 @@ public class Task02 extends TaskAbstract implements ITask {
             if (fileOut.exists()) {
                 if (!fileOut.delete()) {
                     throw new IOException("The file " + fileOut.getName() + " is not delate.");
-                } else {
-                    if (!fileOut.createNewFile()) {
-                        throw new IOException("The file " + fileOut.getName() + " is not created.");
-                    }
-                    this.setFileNameOut(fileOut);
                 }
             }
+            
+            if (!fileOut.createNewFile()) {
+                throw new IOException("The file " + fileOut.getName() + " is not created.");
+            }
+            this.setFileNameOut(fileOut);
+            
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Task02.class.getName()).log(Level.SEVERE, ex.
                     getMessage(), ex);
@@ -153,7 +152,7 @@ public class Task02 extends TaskAbstract implements ITask {
         if (S[k] != 0) {
             return S[k];
         }
-      
+
 //              n/2
 //      S[n] =( sum S[i-1]*S[n-i] )**2
 //              i=1
@@ -189,6 +188,9 @@ public class Task02 extends TaskAbstract implements ITask {
                 in.close();
             }
         }
+        S = new long[n + 1];
+        S[0] = 1;
+        S[1] = 1;
     }
 
     /**
@@ -217,16 +219,17 @@ public class Task02 extends TaskAbstract implements ITask {
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Task02.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
-            out.close();
+            if (out != null) {
+                out.close();
+            }
         }
     }
 
     public static void main(String[] arg) {
-        
-        Task02 task02 = new Task02("task02.in", "tast02.out");
+
+        Task02 task02 = new Task02("./data/task02.in", "./data/task02.out");
         task02.loadFromFile();
         task02.solution();
         task02.writeToFile();
-
     }
 }
