@@ -69,24 +69,26 @@ public class Task03 extends TaskAbstract implements ITask {
             fileIn = new File(nameFileIn);
             if (fileIn.exists()) {
                 this.setFileNameIn(fileIn);
+            }else {
+                throw new FileNotFoundException("The file " + fileIn + " was not found.");
             }
 
             fileOut = new File(nameFileOut);
             if (fileOut.exists()) {
                 if (!fileOut.delete()) {
                     throw new IOException("The file " + fileOut.getName() + " is not delate.");
-                } else {
-                    if (!fileOut.createNewFile()) {
-                        throw new IOException("The file " + fileOut.getName() + " is not created.");
-                    }
-                    this.setFileNameOut(fileOut);
                 }
             }
+            
+            if (!fileOut.createNewFile()) {
+                throw new IOException("The file " + fileOut.getName() + " is not created.");
+            }
+            this.setFileNameOut(fileOut);
         } catch (IOException ex) {
-            Logger.getLogger(Task03.class.getName()).log(Level.SEVERE, "The file " + nameFileOut + "wasn't created.", ex);
+            Logger.getLogger(Task03.class.getName()).log(Level.SEVERE, "The file " + nameFileOut + " wasn't created.", ex);
         }
 
-        assert (fileOut.exists()) : "The file " + nameFileOut + "wasn't created.";
+        assert (fileOut.exists()) : "The file " + nameFileOut + " wasn't created.";
     }
 
     @Override
@@ -139,6 +141,8 @@ public class Task03 extends TaskAbstract implements ITask {
                 if (inRecord.hasNextInt()) {
                     p = inRecord.nextInt();
                     line++;
+                } else {
+                    throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to integer");
                 }
 
                 for (int i = 0; i < p; i++) {
@@ -167,6 +171,8 @@ public class Task03 extends TaskAbstract implements ITask {
                 if (inRecord.hasNextInt()) {
                     r = inRecord.nextInt();
                     line++;
+                } else {
+                    throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to integer");
                 }
                 for (int i = 0; i < r; i++) {
 
@@ -207,6 +213,8 @@ public class Task03 extends TaskAbstract implements ITask {
         int s = 0;
         try {
             in = new Scanner(getFileNameIn());
+
+
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Task03.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -215,11 +223,21 @@ public class Task03 extends TaskAbstract implements ITask {
         if (in.hasNextInt()) {
             s = in.nextInt();
             line++;
+        } else {
+            try {
+                throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to integer");
+
+
+            } catch (InvalidFileFormatExeption ex) {
+                Logger.getLogger(Task03.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
         for (int i = 0; i < s; i++) {
             LoadFile record = new LoadFile(in, line);
             try {
                 graphs.add(record.read());
+
+
             } catch (InvalidFileFormatExeption ex) {
                 Logger.getLogger(Task03.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -264,20 +282,28 @@ public class Task03 extends TaskAbstract implements ITask {
         } finally {
             out.close();
         }
-        for (Data data : graphs) {
-            System.out.println("----------------");
-            System.out.println(data.cities);
-            System.out.println(data.edges);
-            System.out.println(data.rutes);
-            System.out.println(data.listPath);
-        }
+//        for (Data data : graphs) {
+//            System.out.println("----------------");
+//            System.out.println(data.cities);
+//            System.out.println(data.edges);
+//            System.out.println(data.rutes);
+//            System.out.println(data.listPath);
+//        }
     }
 
     public static void main(String[] args) throws FileNotFoundException {
 
-       // LoggerHelper.createFileLoger(Task03.class.getName(), "task03.log");
+        // LoggerHelper.createFileLoger(Task03.class.getName(), "task03.log");
+        String nameFileIn;
+        String nameFileOut;
+        if (args.length == 2) {
+            nameFileIn = args[0];
+            nameFileOut = args[1];
+        }
 
-        Task03 task03 = new Task03("in0301.dat", "out.dat");
+        //Task03 task03 = new Task03("./data/task03.in", "./data/task03.out");
+        Task03 task03 = new Task03("./data/task0301.in", "./data/task0301.out");
+        
         task03.loadFromFile();
         task03.solution();
         task03.writeToFile();
