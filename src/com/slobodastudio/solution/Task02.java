@@ -1,10 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.slobodastudio.solution;
 
-import com.slobodastudio.solution.Task03;
 import com.slobodastudio.tasks.ITask;
 import com.slobodastudio.tasks.TaskAbstract;
 import java.io.File;
