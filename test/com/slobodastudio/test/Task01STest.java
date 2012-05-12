@@ -44,4 +44,13 @@ public class Task01STest {
         System.out.printf("a = %s, b = %s", a, b);
         assertTrue(Task01S.solution(a, b) == rez);
     }
+    
+    @org.junit.Test
+    public void test02() {
+//      Logger.getLogger(Task01S.class.getName()).log(Level.INFO, "a = " + a);
+//      Logger.getLogger(Task01S.class.getName()).log(Level.INFO, "b = " + b);
+        System.out.printf("a = %s, b = %s", a, b);
+        assertTrue(Task01S.solution01(a, b) == rez);
+    }
+    
 }

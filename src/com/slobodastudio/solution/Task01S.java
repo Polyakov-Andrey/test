@@ -1,4 +1,3 @@
-
 package com.slobodastudio.solution;
 
 import java.io.File;
@@ -27,7 +26,7 @@ public class Task01S {
         BigInteger a = null;
         BigInteger b = null;
 
-        Scanner s = new Scanner(new File("./data/task01.in"));        
+        Scanner s = new Scanner(new File("./data/task01.in"));
         if (s.hasNext()) {
             if (s.hasNextBigInteger()) {
                 a = s.nextBigInteger();
@@ -38,13 +37,13 @@ public class Task01S {
             }
         }
 
-        
+
         boolean rez = Task01S.solution(a, b);
         System.out.printf("A = %d, B=%d ==> %s\n", a, b, rez);
-        
+
         PrintWriter out = new PrintWriter(new File("./data/task01.out"));
-        out.println((rez)?"ДА":"НЕТ");
-        out.close();      
+        out.println((rez) ? "ДА" : "НЕТ");
+        out.close();
     }
 
     /**
@@ -81,5 +80,34 @@ public class Task01S {
             }
         }
         return true;
+    }
+    /**
+     * Solving task01 using regular expression.  
+     * 
+     * 
+     * @param a the BigInteger
+     * @param b the BigInteger
+     * @return false if you can get the BigIngeger "a" from the BigInteger "b"
+     */
+    public static boolean solution01(BigInteger a, BigInteger b) {
+        String strA = a.toString();
+        String strB = b.toString();
+        
+        StringBuilder rex = new StringBuilder((strA.length()+1)*2+2);
+
+        // regular expression of type (\d*1\d*2\d*3\d*4\d*) for string "1234"
+        // this expretion construct from string strA
+        // (\d*1(strA[0])\d*(strA[1]) ... \d*(strA[n])\d*)
+        
+        rex.append("(\\d*");       
+        for(int i = 0; i < strA.length(); i++){
+            char c = strA.charAt(i);
+            rex.append(c).append("\\d*");
+        }
+        rex.append(")");
+       
+//        System.out.print(rex);    
+        
+        return (strB.matches(rex.toString())? true: false);
     }
 }
