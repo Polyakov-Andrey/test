@@ -10,7 +10,7 @@ package com.slobodastudio.tasks;
  * @version 1.0
  */
 public interface ITask {
-    public void loadFromFile();
+    public void loadFromFile() throws InvalidFileFormatException;
     public void solution();
     public void writeToFile();
 }

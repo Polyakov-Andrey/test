@@ -6,7 +6,7 @@ import com.slobodastudio.tasks.TaskAbstract;
 import com.slobodastudio.solution.task03.Edge;
 import com.slobodastudio.solution.task03.FloydWarshall;
 import com.slobodastudio.solution.task03.Node;
-import com.slobodastudio.tasks.InvalidFileFormatExeption;
+import com.slobodastudio.tasks.InvalidFileFormatException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -91,7 +91,7 @@ public class Task03 extends TaskAbstract implements ITask {
     }
 
     @Override
-    public void loadFromFile() {
+    public void loadFromFile() throws InvalidFileFormatException {
 
         class LoadFile {
 
@@ -105,19 +105,19 @@ public class Task03 extends TaskAbstract implements ITask {
                 this.line = line;
             }
 
-            public Data read() throws InvalidFileFormatExeption {
+            public Data read() throws InvalidFileFormatException {
                 readCity();
                 readRutes();
                 return data;
             }
 
-            private void readCity() throws InvalidFileFormatExeption {
+            private void readCity() throws InvalidFileFormatException {
                 int numberOfCity = 0; // the number of cities
                 if (inRecord.hasNextInt()) {
                     numberOfCity = inRecord.nextInt();
                     line++;
                 } else {
-                    throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to integer");
+                    throw new InvalidFileFormatException("The format of file is wrong, in line " + line + " is expected to integer");
                 }
                 // initialization of the cities inRecord objects of Node, the first city corresponds to object of Node (0)
                 for (int city = 0; city < numberOfCity; city++) {
@@ -129,19 +129,19 @@ public class Task03 extends TaskAbstract implements ITask {
                         data.cities.get(city).setName(inRecord.next());
                         line++;
                     } else {
-                        throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to line");
+                        throw new InvalidFileFormatException("The format of file is wrong, in line " + line + " is expected to line");
                     }
                     readEdges(city);
                 }
             }
 
-            private void readEdges(int fromCity) throws InvalidFileFormatExeption {
+            private void readEdges(int fromCity) throws InvalidFileFormatException {
                 int p = 0;                          // the number of neighbours of city
                 if (inRecord.hasNextInt()) {
                     p = inRecord.nextInt();
                     line++;
                 } else {
-                    throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to integer");
+                    throw new InvalidFileFormatException("The format of file is wrong, in line " + line + " is expected to integer");
                 }
 
                 for (int i = 0; i < p; i++) {
@@ -149,14 +149,14 @@ public class Task03 extends TaskAbstract implements ITask {
                     if (inRecord.hasNextInt()) {
                         toCity = inRecord.nextInt();
                     } else {
-                        throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to integer");
+                        throw new InvalidFileFormatException("The format of file is wrong, in line " + line + " is expected to integer");
                     }
                     int cost = 0;
                     if (inRecord.hasNextInt()) {
                         cost = inRecord.nextInt();
                         line++;
                     } else {
-                        throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to integer");
+                        throw new InvalidFileFormatException("The format of file is wrong, in line " + line + " is expected to integer");
                     }
 
                     Edge edge = new Edge(data.cities.get(fromCity), data.cities.
@@ -165,13 +165,13 @@ public class Task03 extends TaskAbstract implements ITask {
                 }
             }
 
-            private void readRutes() throws InvalidFileFormatExeption {
+            private void readRutes() throws InvalidFileFormatException {
                 int r = 0; //  // the number of rute to find 
                 if (inRecord.hasNextInt()) {
                     r = inRecord.nextInt();
                     line++;
                 } else {
-                    throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to integer");
+                    throw new InvalidFileFormatException("The format of file is wrong, in line " + line + " is expected to integer");
                 }
                 for (int i = 0; i < r; i++) {
 
@@ -179,7 +179,7 @@ public class Task03 extends TaskAbstract implements ITask {
                     if (inRecord.hasNext()) {
                         strFrom = inRecord.next();
                     } else {
-                        throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to city");
+                        throw new InvalidFileFormatException("The format of file is wrong, in line " + line + " is expected to city");
                     }
 
                     String strTo = null;
@@ -187,7 +187,7 @@ public class Task03 extends TaskAbstract implements ITask {
                         strTo = inRecord.next();
                         line++;
                     } else {
-                        throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to city");
+                        throw new InvalidFileFormatException("The format of file is wrong, in line " + line + " is expected to city");
                     }
 
                     Node cityFrom = null;
@@ -212,8 +212,6 @@ public class Task03 extends TaskAbstract implements ITask {
         int s = 0;
         try {
             in = new Scanner(getFileNameIn());
-
-
         } catch (FileNotFoundException ex) {
             Logger.getLogger(Task03.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -223,24 +221,11 @@ public class Task03 extends TaskAbstract implements ITask {
             s = in.nextInt();
             line++;
         } else {
-            try {
-                throw new InvalidFileFormatExeption("The format of file is wrong, in line " + line + " is expected to integer");
-
-
-            } catch (InvalidFileFormatExeption ex) {
-                Logger.getLogger(Task03.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            throw new InvalidFileFormatException("The format of file is wrong, in line " + line + " is expected to integer");
         }
         for (int i = 0; i < s; i++) {
             LoadFile record = new LoadFile(in, line);
-            try {
-                graphs.add(record.read());
-
-
-            } catch (InvalidFileFormatExeption ex) {
-                Logger.getLogger(Task03.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
+            graphs.add(record.read());
             in = record.inRecord;
             line = record.line;
 
@@ -301,15 +286,18 @@ public class Task03 extends TaskAbstract implements ITask {
         } else {
 //            nameFileIn = "./data/task03.in";
 //            nameFileOut = "./data/task03.out";
-            
-            nameFileIn = "./data/task0301.in";
-            nameFileOut = "./data/task0301.out";            
-        }
-        
-        Task03 task03 = new Task03(nameFileIn, nameFileOut);
 
-        task03.loadFromFile();
-        task03.solution();
-        task03.writeToFile();
+            nameFileIn = "./data/task0301.in";
+            nameFileOut = "./data/task0301.out";
+        }
+
+        Task03 task03 = new Task03(nameFileIn, nameFileOut);
+        try {
+            task03.loadFromFile();
+            task03.solution();
+            task03.writeToFile();
+        } catch (InvalidFileFormatException ex) {
+            Logger.getLogger(Task03.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
