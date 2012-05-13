@@ -68,7 +68,7 @@ public class Task01S {
                 int j = 0;
                 for (int i = 0; i < strA.length(); i++) {          //  цикл по всем десятичным знакам числа A
                     char c = strA.charAt(i);
-                    j = strB.indexOf(c, j);                        //  поиск первого вхождения десятичного знака с чила A в число B 
+                    j = strB.indexOf(c, j);                        //  find the first occurrence of the decimal point "c" of A in the number of B
                     if (j == -1) {                                 //  десятичный знак с в числе B не найден    the decimal digit c didn't find into number B
                         return false;
                     }
@@ -81,10 +81,11 @@ public class Task01S {
         }
         return true;
     }
+
     /**
-     * Solving task01 using regular expression.  
-     * 
-     * 
+     * Solving task01 using regular expression.
+     *
+     *
      * @param a the BigInteger
      * @param b the BigInteger
      * @return false if you can get the BigIngeger "a" from the BigInteger "b"
@@ -92,22 +93,22 @@ public class Task01S {
     public static boolean solution01(BigInteger a, BigInteger b) {
         String strA = a.toString();
         String strB = b.toString();
-        
-        StringBuilder rex = new StringBuilder((strA.length()+1)*2+2);
+
+        StringBuilder rex = new StringBuilder((strA.length() + 1) * 2 + 2);
 
         // regular expression of type (\d*1\d*2\d*3\d*4\d*) for string "1234"
         // this expretion construct from string strA
         // (\d*1(strA[0])\d*(strA[1]) ... \d*(strA[n])\d*)
-        
-        rex.append("(\\d*");       
-        for(int i = 0; i < strA.length(); i++){
+
+        rex.append("(\\d*");
+        for (int i = 0; i < strA.length(); i++) {
             char c = strA.charAt(i);
             rex.append(c).append("\\d*");
         }
         rex.append(")");
-       
+
 //        System.out.print(rex);    
-        
-        return (strB.matches(rex.toString())? true: false);
+
+        return (strB.matches(rex.toString()) ? true : false);
     }
 }
